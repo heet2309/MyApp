@@ -88,7 +88,7 @@ def verify(request):
         
         reg = RegistrationTable(name=name, email=email, password=password, phone=phone)
         reg.save()
-    
+        print("hello")
    
     try:
            
