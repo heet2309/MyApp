@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ice Cream Factory - OTP Verification</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* OTP Container */
+    .otp-container {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .otp-container h1 {
+      color: #28a745;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .otp-container p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .otp-container .otp {
+      font-size: 24px;
+      font-weight: bold;
+      color: #28a745;
+      letter-spacing: 5px;
+      margin: 20px 0;
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(40, 167, 69, 0.1);
+      border-radius: 8px;
+    }
+
+    .otp-container .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 16px;
+      color: white;
+      background-color: #28a745;
+      text-decoration: none;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .otp-container .btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<form action="{% url 'login'  %}" method="POST">
+ 
+<body>
+  <div class="otp-container">
+    <h1>Verify Your Registration</h1>
+    <p>Welcome to Ice Cream Factory! Use the OTP below to complete your registration process.</p>
+    <div class="otp"></div> <!-- Replace "12345" with the actual OTP -->
+    <p>If you did not request this, please ignore this email.</p>
+    <button class="btn">Go to Login</button>
+  </div>
+</body>
+
+</html>

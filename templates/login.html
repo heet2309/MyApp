@@ -1,0 +1,170 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body and Layout */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-image: url('https://www.transparenttextures.com/patterns/green-leaves.png'); /* Background Image */
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+      color: rgb(255, 255, 255);
+    }
+
+    /* Form Container */
+    .form-container {
+      background: rgba(255, 255, 255, 0.8);  /* Slight transparency */
+      padding: 40px;
+      width: 100%;
+      max-width: 450px;
+      border-radius: 10px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+      animation: fadeIn 1s ease-out;
+    }
+
+    /* Fade-in Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Form Heading */
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      color: #28a745; /* Green color for the title */
+    }
+
+    /* Input Fields */
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #28a745;  /* Green border */
+      border-radius: 6px;
+      background-color: transparent;
+      font-size: 16px;
+      color: #28a745;  /* Green text color */
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-group label {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      font-size: 16px;
+      color: #28a745;  /* Green label text */
+      transition: all 0.3s ease;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* Input Focus Effect */
+    .input-group input:focus {
+      border-color: #28a745;
+      box-shadow: 0 0 5px rgba(40, 167, 69, 0.6);
+    }
+
+    /* Floating Label on Focus */
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      font-size: 12px;
+      color: #28a745; /* Green color for floating label */
+    }
+
+    /* Submit Button */
+    button {
+      width: 100%;
+      padding: 15px;
+      background-color: #28a745;  /* Green background for button */
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #218838;  /* Darker green on hover */
+      transform: translateY(-3px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 25px;
+        width: 90%;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Ice Cream Factory 🍨</h2>
+    <h2>Login to Your Account</h2>
+    
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+      <!-- Email Field -->
+      <div class="input-group">
+        <input type="email" id="email" name="email" required placeholder=" ">
+        <label for="email">Email</label>
+      </div>
+
+      <!-- Password Field -->
+      <div class="input-group">
+        <input type="password" id="password" name="password" required placeholder=" ">
+        <label for="password">Password</label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  
+</body>
+</html>

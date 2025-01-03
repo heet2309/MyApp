@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Ice Cream Factory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body and Layout */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    /* Navigation Bar */
+    nav {
+      background-color: #28a745;
+      padding: 15px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav a {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #f1f1f1;
+    }
+
+    /* Heading Section */
+    .heading {
+      text-align: center;
+      padding: 50px 0;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .heading h1 {
+      font-size: 36px;
+      color: #28a745;
+      font-weight: 600;
+    }
+
+    .heading p {
+      font-size: 20px;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    /* About Section */
+    .about-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      padding: 50px 20px;
+    }
+
+    .about-image {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+    }
+
+    .about-image img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-content {
+      flex: 2;
+      min-width: 300px;
+      max-width: 600px;
+    }
+
+    .about-content h2 {
+      font-size: 28px;
+      color: #28a745;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .about-content p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .about-content ul {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .about-content ul li {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #555;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .about-content ul li::before {
+      content: "✓";
+      color: #28a745;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    /* Footer Section */
+    footer {
+      background-color: #28a745;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="home">Home</a>
+    <a href="products">Products</a>
+    <a href="#">About Us</a>
+    <a href="contact">Contact</a>
+  </nav>
+
+  <!-- Heading Section -->
+  <div class="heading">
+    <h1>About Us</h1>
+    <p>Learn more about our journey and commitment to quality</p>
+  </div>
+
+  <!-- About Section -->
+  <div class="about-section">
+    <!-- About Image -->
+    <div class="about-image">
+      <img src="https://source.unsplash.com/600x400/?ice-cream,factory" alt="Our Factory">
+    </div>
+    <!-- About Content -->
+    <div class="about-content">
+      <h2>Our Story</h2>
+      <p>At Ice Cream Factory, we believe in creating the finest ice creams that not only taste delicious but are made with love and care. Our journey began with a vision to craft premium quality ice creams using the best organic ingredients.</p>
+      <h2>Why Choose Us?</h2>
+      <ul>
+        <li>100% organic ingredients sourced responsibly.</li>
+        <li>No artificial colors, flavors, or preservatives.</li>
+        <li>Crafted with passion to bring you unmatched taste and quality.</li>
+        <li>Committed to sustainability and eco-friendly practices.</li>
+        <li>Trusted by customers for over a decade.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
+  </footer>
+</body>
+
+</html>

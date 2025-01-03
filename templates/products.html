@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Products - Ice Cream Factory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body and Layout */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    /* Navigation Bar */
+    nav {
+      background-color: #28a745;
+      padding: 15px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav a {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #f1f1f1;
+    }
+
+    /* Heading Section */
+    .heading {
+      text-align: center;
+      padding: 50px 0;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .heading h1 {
+      font-size: 36px;
+      color: #28a745;
+      font-weight: 600;
+    }
+
+    .heading p {
+      font-size: 20px;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    /* Product Grid Section */
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 50px 20px;
+    }
+
+    .product {
+      width: 300px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+      border-bottom: 2px solid #28a745;
+    }
+
+    .product h3 {
+      font-size: 22px;
+      color: #28a745;
+      margin: 15px 0;
+      font-weight: 600;
+    }
+
+    .product p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 15px;
+      padding: 0 15px;
+    }
+
+    .product:hover {
+      transform: translateY(-10px);
+    }
+
+    /* Footer Section */
+    footer {
+      background-color: #28a745;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="home">Home</a>
+    <a href="#">Products</a>
+    <a href="about">About Us</a>
+    <a href="contact">Contact</a>
+  </nav>
+
+  <!-- Heading Section -->
+  <div class="heading">
+    <h1>Our Delicious Ice Creams</h1>
+    <p>Explore our wide variety of premium ice creams</p>
+  </div>
+
+  <!-- Product Grid Section -->
+  <div class="product-grid">
+    <!-- Product 1 -->
+    <div class="product">
+      <img src="https://www.thespruceeats.com/thmb/BYOHKcXhja-ez7Fr9obgBrDHJ1Y=/3064x2042/filters:fill(auto,1)/easy-chocolate-ice-cream-recipe-1945798-hero-01-45d9f26a0aaf4c1dba38d7e0a2ab51e2.jpg" alt="Chocolate Ice Cream">
+      <h3>Chocolate</h3>
+      <p>Rich and creamy chocolate ice cream for chocolate lovers.</p>
+    </div>
+    <!-- Product 2 -->
+    <div class="product">
+      <img src="https://tse1.mm.bing.net/th?id=OIP.-vHAgv1nXTtn8RHqyuOOKgHaFj&pid=Api&P=0&h=180" alt="Vanilla Ice Cream">
+      <h3>Vanilla</h3>
+      <p>Classic vanilla flavor with a smooth and velvety texture.</p>
+    </div>
+    <!-- Product 3 -->
+    <div class="product">
+      <img src="https://tse4.mm.bing.net/th?id=OIP.JFwe8NN0p4oe2DaG7sgV9AHaHa&pid=Api&P=0&h=180" alt="Strawberry Ice Cream">
+      <h3>Strawberry</h3>
+      <p>Fresh and fruity strawberry ice cream, a summer favorite.</p>
+    </div>
+    <!-- Product 4 -->
+    <div class="product">
+      <img src="https://buttermilkbysam.com/wp-content/uploads/2023/06/mint-choc-chip-ice-cream-6.jpg" alt="Mint Chocolate">
+      <h3>Mint Chocolate</h3>
+      <p>Refreshing mint with indulgent chocolate chips.</p>
+    </div>
+    <!-- Product 5 -->
+    <div class="product">
+      <img src="https://tse1.mm.bing.net/th?id=OIP.-NDy7kv6Lx0mFAiP71ZkxgHaLH&pid=Api&P=0&h=180" alt="Cookies and Cream">
+      <h3>Cookies & Cream</h3>
+      <p>Chunks of cookies in creamy vanilla ice cream.</p>
+    </div>
+    <!-- Product 6 -->
+    <div class="product">
+      <img src="https://mytastycurry.com/wp-content/uploads/2020/05/mango-ice-cream-1-1.jpg" alt="Mango">
+      <h3>Mango</h3>
+      <p>Sweet and tropical mango flavor to brighten your day.</p>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
+  </footer>
+</body>
+
+</html>
