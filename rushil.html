@@ -1,0 +1,580 @@
+<!-- product_page.html:-- -->
+
+
+
+<!-- cart_page.html:-- -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body and Layout */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    /* Navigation Bar */
+    nav {
+      background-color: #28a745;
+      padding: 15px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav a {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #f1f1f1;
+    }
+
+    /* Heading Section */
+    .heading {
+      text-align: center;
+      padding: 50px 0;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .heading h1 {
+      font-size: 36px;
+      color: #28a745;
+      font-weight: 600;
+    }
+
+    .heading p {
+      font-size: 20px;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    /* Product Grid Section */
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 50px 20px;
+    }
+
+    .product {
+      width: 300px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .product img {
+      width: 100%;
+      height: 300px;
+      /* Fixed height for uniformity */
+      object-fit: cover;
+      /* Ensures the image covers the area without distortion */
+      border-bottom: 2px solid #28a745;
+    }
+
+    .product h3 {
+      font-size: 22px;
+      color: #28a745;
+      margin: 15px 0;
+      font-weight: 600;
+    }
+
+    .product p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 15px;
+      padding: 0 15px;
+    }
+
+    .product:hover {
+      transform: translateY(-10px);
+    }
+
+    /* Add to Cart Button */
+    .product button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 15px;
+    }
+
+    .product button:hover {
+      background-color: #218838;
+    }
+
+    /* Footer Section */
+    footer {
+      background-color: #28a745;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 16px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .popup.hidden {
+      display: none;
+    }
+
+    .popup-content button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .popup-content button:hover {
+      background-color: #218838;
+    }
+
+    /* Confetti Effect */
+    .confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ff0;
+      border-radius: 50%;
+      opacity: 0;
+      animation: confetti-anim 5s ease-out forwards;
+    }
+
+    @keyframes confetti-anim {
+      0% {
+        opacity: 0;
+        transform: translateY(-100px) rotate(0deg);
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    /* Thank You Message */
+    .thank-you {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .thank-you.show {
+      opacity: 1;
+    }
+
+    /* Pagination Styles */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .pagination a {
+      color: #28a745;
+      font-size: 18px;
+      text-decoration: none;
+      margin: 0 10px;
+      padding: 5px 10px;
+      border: 1px solid #28a745;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .pagination a:hover {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .pagination .current {
+      background-color: #28a745;
+      color: white;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="home">Home</a>
+    <a href="#">Products</a>
+    <a href="/contact/">Contact</a>
+    <a href="/about/">About Us</a>
+  </nav>
+
+  <div id="popupMessage" class="popup hidden">
+    <div class="popup-content">
+      <p id="popupText"></p>
+      <button id="popupClose">Close</button>
+    </div>
+  </div>
+
+  <div id="confettiContainer" class="confetti hidden">
+    <!-- Confetti pieces will be added here dynamically -->
+  </div>
+
+  <div id="thankYouMessage" class="thank-you hidden">
+    <h2>Thank You!</h2>
+    <p>Your item has been added to the cart successfully.</p>
+    <button id="thankYouClose">Close</button>
+  </div>
+
+  <!-- Heading Section -->
+  <div class="heading">
+    <h1>Our Delicious Ice Creams</h1>
+    <p>Explore our wide variety of premium ice creams</p>
+  </div>
+
+  <!-- Product Grid Section -->
+  <div class="product-grid">
+    {% for product in page_obj %}
+    <div class="product">
+      <img src="{{ product.image_url }}" alt="{{ product.name }}">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+      <button onclick="addToCart({{ product.id }}, {{ user_id }})">Add to Cart</button>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; First</a>
+      <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Next</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+    {% endif %}
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2025 Ice Cream Factory. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function addToCart(productId, userId) {
+      const quantity = 1;
+
+      $.ajax({
+        url: '/add_to_cart/',
+        type: 'POST',
+        data: JSON.stringify({ user_id: userId, product_id: productId, quantity: quantity }),
+        contentType: 'application/json',
+        success: function(response) {
+          if (response.success) {
+            showPopup('Item added to cart.');
+            showConfetti();
+            showThankYouMessage();
+          } else {
+            showPopup('Error adding item to cart.');
+          }
+        },
+        error: function() {
+          showPopup('Error adding item to cart.');
+        }
+      });
+    }
+
+    // Function to display the popup
+    function showPopup(message) {
+      $('#popupText').text(message);
+      $('#popupMessage').removeClass('hidden');
+    }
+
+    // Close the popup when the close button is clicked
+    $('#popupClose').on('click', function () {
+      $('#popupMessage').addClass('hidden');
+    });
+
+    // Function to show confetti
+    function showConfetti() {
+      const confettiContainer = $('#confettiContainer');
+      confettiContainer.removeClass('hidden');
+      for (let i = 0; i < 50; i++) {
+        const confettiPiece = $('<div class="confetti-piece"></div>');
+        confettiPiece.css({
+          left: Math.random() * 100 + 'vw',
+          animationDelay: Math.random() * 2 + 's',
+          backgroundColor: getRandomColor()
+        });
+        confettiContainer.append(confettiPiece);
+      }
+      setTimeout(() => {
+        confettiContainer.addClass('hidden').empty();
+      }, 5000);
+    }
+
+    // Function to get a random color
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    // Close the thank you message when the close button is clicked
+    $('#thankYouClose').on('click', function () {
+      $('#thankYouMessage').removeClass('show').addClass('hidden');
+    });
+
+    // Function to show thank you message
+    function showThankYouMessage() {
+      $('#thankYouMessage').addClass('show').removeClass('hidden');
+    }
+  </script>
+</body>
+
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart - Ice Cream Factory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Reusing styles from the product page */
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body and Layout */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    /* Navigation Bar */
+    nav {
+      background-color: #28a745;
+      padding: 15px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav a {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #f1f1f1;
+    }
+
+    /* Heading Section */
+    .heading {
+      text-align: center;
+      padding: 50px 0;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .heading h1 {
+      font-size: 36px;
+      color: #28a745;
+      font-weight: 600;
+    }
+
+    .heading p {
+      font-size: 20px;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    /* Product Grid Section */
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 50px 20px;
+    }
+
+    .product {
+      width: 300px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+      border-bottom: 2px solid #28a745;
+    }
+
+    .product h3 {
+      font-size: 22px;
+      color: #28a745;
+      margin: 15px 0;
+      font-weight: 600;
+    }
+
+    .product p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 15px;
+      padding: 0 15px;
+    }
+
+    .product:hover {
+      transform: translateY(-10px);
+    }
+
+    /* Footer Section */
+    footer {
+      background-color: #28a745;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="{% url 'home2' data.id %}">Home</a>
+    <a href="{% url 'products' data.id %}">Products</a>
+    <a href="{% url 'about' data.id %}">About Us</a>
+    <a href="{% url 'contact' %}">Contact</a>
+  </nav>
+
+  <!-- Heading Section -->
+  <div class="heading">
+    <h1>Your Cart</h1>
+    <p>Items you have selected</p>
+  </div>
+
+  <!-- Product Grid Section -->
+  <div class="product-grid">
+    {% for product in cart_items %}
+    <div class="product">
+      <img src="{{ product.image_url }}" alt="{{ product.name }}">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
+  </footer>
+</body>
+
+</html>

@@ -158,10 +158,10 @@
     <!-- Navigation Bar -->
     <nav>
       <a href="#">Home</a>
-      <a href="{% url 'products' %}">Products</a>
+      <a href="{% url 'products' %}?user_id={{ data.id }}">Products</a>
       <a href="{% url 'about' data.id %}">About Us</a>
       <a href="{% url 'contact' data.id %}">Contact</a>
-      <a href="{% url 'contact' data.id %}">🛒</a>
+      <a href="{% url 'cart' data.id  %}">Cart 🛒</a>
       
       <!-- Dropdown Menu -->
       <div class="dropdown">

@@ -133,33 +133,70 @@ def home_2(request, id):
 
     return render(request, "home2.html", {'data': data})
 
+def cart(request, id):
+    data = {
+        'id': id
+    }
+    return render(request, "cart.html", {'data': data})
 
 def contact(request, id):
-
     data = {
         'id': id
     }
     return render(request, 'contact.html', {'data': data})
+@csrf_exempt
+def add_to_cart(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            user_id = data.get("user_id")
+            product_id = data.get("product_id")
+            quantity =int(data.get("quantity", 1))
+            
+            print(f"User ID: {user_id}, Product ID: {product_id}, Quantity: {quantity}") 
+
+            user = get_object_or_404(RegistrationTable, id=user_id)
+            product = get_object_or_404(Product, id=product_id)
+            cart_item, created = Cart.objects.get_or_create(user=user, product=product)
+
+            if not created:
+                cart_item.quantity += int(quantity)
+                cart_item.save()
+            else:
+                cart_item.quantity = int(quantity)
+                cart_item.save()
+                
+            return JsonResponse({"success": True, "message": "Item added to cart."})
+        except Exception as e:
+            return JsonResponse({"success": False, "message": str(e)})
+    return JsonResponse({"success": False, "message": "Invalid request."})
+
 
 def products(request):
-    products_list = Product.objects.all()
-    paginator = Paginator(products_list, 3)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    
+   
+    user_id = request.GET.get('user_id')
+    print(f"User ID: {user_id}")  # Debugging print statement
+    products = Product.objects.all()
+    return render(request, "products.html", {"products": products, "user_id": user_id})
 
-    user_id = None
-    if request.user.is_authenticated:
-        try:
-            registration = RegistrationTable.objects.get(user=request.user)
-            user_id = registration.user.id
-        except RegistrationTable.DoesNotExist:
-            user_id = None
 
-    context = {
-        "page_obj": page_obj,
-        "user_id": user_id
+
+def cart(request, user_id):
+    user = get_object_or_404(RegistrationTable, id=user_id)
+    cart_items = Cart.objects.filter(user=user)
+    
+    total_amount=0
+    for item in cart_items:
+        item.total = item.product.price * item.quantity
+        total_amount += item.total
+
+    data = {
+        'cart_items': cart_items,
+        'total_amount': total_amount
     }
-    return render(request, "products.html", context)
+    return render(request, "cart.html", {"data": data})
+
 
 # def products(request):
     
@@ -186,12 +223,8 @@ def products(request):
     #         f.write(str(products))
             
     # return render(request, 'products.html', {'data': data})
-
-
-
-
+    
 def about(request, id):
-
     data = {
         'id': id
     }
@@ -217,17 +250,17 @@ def otp_var(request, email):
             )
             reg.save()
 
-            # Clean up temporary registration entry
+           
             temp_reg.delete()
 
-            # Redirect to success.html
-            return redirect('success')  # 'success' should be a valid URL pattern name
+            
+            return redirect('success') 
         except TemporaryTable.DoesNotExist:
             messages.error(request, "Invalid OTP or expired OTP. Please try again.")
         except Exception as e:
             messages.error(request, f"An error occurred: {str(e)}")
 
-    # Render the OTP verification page
+   
     return render(request, 'otpver.html', {'email': email})
 
 
@@ -244,7 +277,7 @@ def sendmail(request, email):
         print("Fail to send confirmation email")
 
 
-# Store OTPs temporarily
+
 otp_storage = {}
 
 
@@ -256,7 +289,7 @@ def forgot_password(request):
             otp = rand.randint(1000, 9999)
             otp_storage[email] = otp
 
-            # Send OTP using yagmail
+            
             yag = mail.SMTP("heetlahute@gmail.com", "myuh ajbw mlzu qlvo")
             yag.send(
                 to=email,
@@ -281,36 +314,73 @@ def verify_otp(request, email):
             user = RegistrationTable.objects.get(email=email)
             user.password = new_password
             user.save()
-            del otp_storage[email]  # Clear OTP after use
+            del otp_storage[email]  
             messages.success(request, "Password reset successfully. Please log in.")
             return redirect('login')
         else:
             messages.error(request, "Invalid OTP or expired.")
     return render(request, 'verify_otp.html', {'email': email})
 
-class AddToCartView():
-    def post(self, request, *args, **kwargs):
-        data = json.loads(request.body)
-        user_id = data.get('user_id')
-        product_id = data.get('product_id')
-        quantity = data.get('quantity')
-
+def RemoveFromCartView(request):
+    if request.method == 'POST':  
         try:
-            product = Product.objects.get(id=product_id)
-            cart_item, created = Cart.objects.get_or_create(user_id=user_id, product=product)
+            data = json.loads(request.body)
+            item_id = data.get('item_id')
 
-            if not created:
-                cart_item.quantity += quantity
-            else:
-                cart_item.quantity = quantity
+            if item_id is None:
+                return JsonResponse({'success': False, 'message': 'Item ID is required.'}, status=400)
 
-            cart_item.save()
-            return JsonResponse({'success': True, 'message': 'Item added to cart.'})
-        except Product.DoesNotExist:
-            return JsonResponse({'success': False, 'message': 'Product not found.'})
+            cart_item = Cart.objects.get(id=item_id)
+            cart_item.delete()
+            return JsonResponse({'success': True, 'message': 'Item removed from cart.'})
+
+        except Cart.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Item not found in cart.'}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'message': 'Invalid JSON.'}, status=400)
         except Exception as e:
-            return JsonResponse({'success': False, 'message': str(e)})
-# # @login_required
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'}, status=405)
+
+def ReduceQuantityView(request):
+    if request.method == 'POST':  # Ensure this view only processes POST requests
+        try:
+            data = json.loads(request.body)
+            item_id = data.get('item_id')
+
+            if item_id is None:
+                return JsonResponse({'success': False, 'message': 'Item ID is required.'}, status=400)
+
+            cart_item = Cart.objects.get(id=item_id)
+
+            if cart_item.quantity > 1:
+                cart_item.quantity -= 1
+                cart_item.save()
+                new_total = cart_item.quantity * cart_item.product.price
+                # Recalculate the final total for all items in the cart
+                final_total_amount = sum(
+                    item.quantity * item.product.price for item in Cart.objects.all()
+                )
+                
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Quantity reduced by one.',
+                    'new_quantity': cart_item.quantity,
+                    'new_total': new_total,
+                    'final_total_amount': final_total_amount  # Updated value
+                })
+            else:
+                return JsonResponse({'success': False, 'message': 'Quantity cannot be reduced below one.'}, status=400)
+
+        except Cart.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Item not found in cart.'}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'message': 'Invalid JSON.'}, status=400)
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'}, status=405)
 # @csrf_exempt
 # def update_profile(request):
 #     if request.method == 'POST':

@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from registration.views import registration_page,login_view,success,home,home_2,products,profile,contact,about,otp_var,update_profile,forgot_password,verify_otp,AddToCartView
+from registration.views import registration_page,login_view,success,home,home_2,products,profile,contact,about,otp_var,update_profile,forgot_password,verify_otp,add_to_cart,cart,RemoveFromCartView,ReduceQuantityView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +33,10 @@ urlpatterns = [
     path('otp-verification/<str:email>/', otp_var, name='otp_verification'),
     path('forgot_password/', forgot_password, name='forgot_password'),
     path('verify_otp/<str:email>/', verify_otp, name='verify_otp'),
-    path('add_to_cart/', AddToCartView, name='add_to_cart'),
+    path('add_to_cart/', add_to_cart, name='add_to_cart'),
+    path('cart/<int:user_id>/', cart, name='cart'),
+    path('remove_from_cart_api/', RemoveFromCartView, name='remove_from_cart_api'),
+    path('reduce_quantity_api/', ReduceQuantityView, name='reduce_quantity_api'),
 
 ]
 

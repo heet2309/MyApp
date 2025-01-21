@@ -35,7 +35,7 @@ class Product(models.Model):
         db_table = "product"
 
 class Cart(models.Model):
-    user_id = models.IntegerField(blank=True, null=True)
+    user = models.ForeignKey(RegistrationTable, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE,blank=True, null=True)
     quantity = models.IntegerField(default=1, blank=True, null=True)
 

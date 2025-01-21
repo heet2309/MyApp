@@ -2,154 +2,278 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Cart - Ice Cream Factory</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    /* Reusing styles from the product page */
-    /* Global Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Body and Layout */
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
-    }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-    /* Navigation Bar */
-    nav {
-      background-color: #28a745;
-      padding: 15px 0;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        .cart-container {
+            width: 100%;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
 
-    nav a {
-      color: white;
-      font-size: 18px;
-      text-decoration: none;
-      margin: 0 20px;
-      font-weight: 600;
-    }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-    nav a:hover {
-      color: #f1f1f1;
-    }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    /* Heading Section */
-    .heading {
-      text-align: center;
-      padding: 50px 0;
-      background-color: #ffffff;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #28a745;
+        }
 
-    .heading h1 {
-      font-size: 36px;
-      color: #28a745;
-      font-weight: 600;
-    }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease;
+        }
 
-    .heading p {
-      font-size: 20px;
-      margin-top: 10px;
-      color: #555;
-    }
+        .cart-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
 
-    /* Product Grid Section */
-    .product-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 50px 20px;
-    }
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
 
-    .product {
-      width: 300px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-    }
+        .details {
+            flex: 1;
+            margin-left: 20px;
+        }
 
-    .product img {
-      width: 100%;
-      height: auto;
-      border-bottom: 2px solid #28a745;
-    }
+        .details h2 {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 5px;
+        }
 
-    .product h3 {
-      font-size: 22px;
-      color: #28a745;
-      margin: 15px 0;
-      font-weight: 600;
-    }
+        .details p {
+            font-size: 16px;
+            color: #777;
+        }
 
-    .product p {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 15px;
-      padding: 0 15px;
-    }
+        .quantity {
+            text-align: center;
+        }
 
-    .product:hover {
-      transform: translateY(-10px);
-    }
+        .quantity p {
+            font-size: 16px;
+            color: #555;
+        }
 
-    /* Footer Section */
-    footer {
-      background-color: #28a745;
-      color: white;
-      padding: 20px 0;
-      text-align: center;
-    }
+        .remove-form {
+            text-align: center;
+        }
 
-    footer p {
-      font-size: 16px;
-    }
-  </style>
+        .remove-form button {
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .remove-form button:hover {
+            background-color: #c82333;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 18px;
+            color: #777;
+            margin-top: 20px;
+        }
+
+        /* Toast Notification Styles */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
 </head>
 
 <body>
-
-  <!-- Navigation Bar -->
-  <nav>
-    <a href="{% url 'home2' %}">Home</a>
-    <a href="{% url 'products' %}">Products</a>
-    <a href="{% url 'about' %}">About Us</a>
-    <a href="{% url 'contact' %}">Contact</a>
-  </nav>
-
-  <!-- Heading Section -->
-  <div class="heading">
-    <h1>Your Cart</h1>
-    <p>Items you have selected</p>
-  </div>
-
-  <!-- Product Grid Section -->
-  <div class="product-grid">
-    {% for product in cart_items %}
-    <div class="product">
-      <img src="{{ product.image_url }}" alt="{{ product.name }}">
-      <h3>{{ product.name }}</h3>
-      <p>{{ product.description }}</p>
+    <div class="cart-container">
+        <h1>Your Cart</h1>
+        {% if data.cart_items %}
+        {% for item in data.cart_items %}
+        <div class="cart-item" id="cart-item-{{ item.id }}">
+            <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
+            <div class="details">
+                <h2>{{ item.product.name }}</h2>
+                <p>Price: ₹{{ item.product.price }}</p>
+                <p>Total: ₹{{ item.total }}</p>
+            </div>
+            <div class="quantity">
+                <p>Quantity: {{ item.quantity }}</p>
+            </div>
+            <div class="remove-form">
+                <button class="remove-btn" data-item-id="{{ item.id }}">Remove</button>
+                <button class="reduce-btn" data-item-id="{{ item.id }}">Reduce Quantity</button>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="quantity">
+            <p>Final Total: ₹{{ data.total_amount }}</p>
+        </div>
+        {% else %}
+        <p class="empty-cart">Your cart is empty.</p>
+        {% endif %}
     </div>
-    {% endfor %}
-  </div>
 
-  <!-- Footer Section -->
-  <footer>
-    <p>&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
-  </footer>
+    <!-- Toast Message -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const removeButtons = document.querySelectorAll(".remove-btn");
+            const reduceButtons = document.querySelectorAll(".reduce-btn");
+            const toast = document.getElementById("toast");
+
+            
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3000); 
+            }
+
+            removeButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const itemId = button.getAttribute("data-item-id");
+                    if (confirm("Are you sure you want to remove this item?")) {
+                        fetch("{% url 'remove_from_cart_api' %}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": "{{ csrf_token }}"
+                            },
+                            body: JSON.stringify({ item_id: itemId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                              
+                                const cartItem = document.getElementById(`cart-item-${itemId}`);
+                                cartItem.remove();
+
+                               
+                                const remainingItems = document.querySelectorAll(".cart-item");
+                                if (remainingItems.length === 0) {
+                                    document.querySelector(".cart-container").innerHTML = `
+                                        <h1>Your Cart</h1>
+                                        <p class="empty-cart">Your cart is empty.</p>
+                                    `;
+                                }
+                                showToast(data.message);  
+                            } else {
+                                showToast(data.error); 
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            showToast("An error occurred while removing the item.");
+                        });
+                    }
+                });
+            });
+
+            reduceButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const itemId = button.getAttribute("data-item-id");
+
+                    fetch("{% url 'reduce_quantity_api' %}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        },
+                        body: JSON.stringify({ item_id: itemId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            
+                            const quantityElement = document.querySelector(`#cart-item-${itemId} .quantity p`);
+                            quantityElement.textContent = `Quantity: ${data.new_quantity}`;
+
+                            const totalElement = document.querySelector(`#cart-item-${itemId} .details p:nth-child(3)`);
+                            totalElement.textContent = `Total: ₹${data.new_total}`;
+
+                            const finalTotalElement = document.querySelector(".quantity p");
+                            finalTotalElement.textContent = `Final Total: ₹${data.final_total_amount}`;
+
+                            showToast(data.message);  
+                        } else {
+                            showToast(data.error); 
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        showToast("An error occurred while reducing the quantity.");
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
