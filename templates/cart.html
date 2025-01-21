@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart - Ice Cream Factory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Reusing styles from the product page */
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body and Layout */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    /* Navigation Bar */
+    nav {
+      background-color: #28a745;
+      padding: 15px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav a {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #f1f1f1;
+    }
+
+    /* Heading Section */
+    .heading {
+      text-align: center;
+      padding: 50px 0;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .heading h1 {
+      font-size: 36px;
+      color: #28a745;
+      font-weight: 600;
+    }
+
+    .heading p {
+      font-size: 20px;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    /* Product Grid Section */
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 50px 20px;
+    }
+
+    .product {
+      width: 300px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+      border-bottom: 2px solid #28a745;
+    }
+
+    .product h3 {
+      font-size: 22px;
+      color: #28a745;
+      margin: 15px 0;
+      font-weight: 600;
+    }
+
+    .product p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 15px;
+      padding: 0 15px;
+    }
+
+    .product:hover {
+      transform: translateY(-10px);
+    }
+
+    /* Footer Section */
+    footer {
+      background-color: #28a745;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="{% url 'home2' %}">Home</a>
+    <a href="{% url 'products' %}">Products</a>
+    <a href="{% url 'about' %}">About Us</a>
+    <a href="{% url 'contact' %}">Contact</a>
+  </nav>
+
+  <!-- Heading Section -->
+  <div class="heading">
+    <h1>Your Cart</h1>
+    <p>Items you have selected</p>
+  </div>
+
+  <!-- Product Grid Section -->
+  <div class="product-grid">
+    {% for product in cart_items %}
+    <div class="product">
+      <img src="{{ product.image_url }}" alt="{{ product.name }}">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
+  </footer>
+</body>
+
+</html>

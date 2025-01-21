@@ -1,9 +1,8 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>
   <style>
@@ -126,6 +125,21 @@
       transform: translateY(-3px);
     }
 
+    /* Forgot Password Link */
+    .forgot-password {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #28a745; /* Green text for link */
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .forgot-password:hover {
+      color: #218838; /* Darker green on hover */
+    }
+
     /* Responsive Design */
     @media (max-width: 480px) {
       .form-container {
@@ -146,8 +160,9 @@
     <h2>Ice Cream Factory 🍨</h2>
     <h2>Login to Your Account</h2>
     
-    <form action="{% url 'login' %}" method="POST">
-        {% csrf_token %}
+    <!-- Login Form -->
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
       <!-- Email Field -->
       <div class="input-group">
         <input type="email" id="email" name="email" required placeholder=" ">
@@ -160,11 +175,13 @@
         <label for="password">Password</label>
       </div>
 
-      <!-- Submit Button -->
-      <button type="submit">Login</button>
+      <!-- Login Button -->
+      <button type="login">Login</button>
     </form>
+
+    <!-- Forgot Password Link -->
+    <a href="forgot_password" class="forgot-password">Forgot Password?</a>
   </div>
 
-  
 </body>
 </html>

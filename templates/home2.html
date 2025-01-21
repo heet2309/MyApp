@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <title>Ice Cream Factory</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
@@ -152,32 +153,41 @@
 </head>
 
 <body>
-  <!-- Navigation Bar -->
-  <nav>
-    <a href="#">Home</a>
-    <!-- Dropdown Menu -->
-    <div class="dropdown">
-      <button class="dropdown-btn">Account</button>
-      <div class="dropdown-content">
-        <a href="login">Login</a>
-        <a href="reg">Sign up</a>
+  <form method="post">
+    {% csrf_token %}
+    <!-- Navigation Bar -->
+    <nav>
+      <a href="#">Home</a>
+      <a href="{% url 'products' %}">Products</a>
+      <a href="{% url 'about' data.id %}">About Us</a>
+      <a href="{% url 'contact' data.id %}">Contact</a>
+      <a href="{% url 'contact' data.id %}">🛒</a>
+      
+      <!-- Dropdown Menu -->
+      <div class="dropdown">
+        <button class="dropdown-btn">Account</button>
+        <div class="dropdown-content">
+          <a href="{% url 'forgot_password'  %}">Forget Password</a>
+          <a href="{% url 'profile' data.id %}">Profile</a>
+          <a href="{% url 'home' %}">Logout</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>Welcome to Ice Cream Factory</h1>
+      <p>Fresh, Delicious & Premium Ice Creams made with love!</p>
+      <div class="description">
+        Indulge in the finest ice creams crafted with the freshest ingredients. Our flavors range from classic vanilla to exotic mango, ensuring there's something for everyone. Experience the joy of ice cream like never before!
       </div>
     </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <div class="hero">
-    <h1>Welcome to Ice Cream Factory</h1>
-    <p>Fresh, Delicious & Premium Ice Creams made with love!</p>
-    <div class="description">
-      Indulge in the finest ice creams crafted with the freshest ingredients. Our flavors range from classic vanilla to exotic mango, ensuring there's something for everyone. Experience the joy of ice cream like never before!
-    </div>
-  </div>
-
-  <!-- Footer Section -->
-  <footer>
-    <p>&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
-  </footer>
+    <!-- Footer Section -->
+    <footer>
+      <p>&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
+    </footer>
+  </form>
 </body>
 
 </html>

@@ -16,30 +16,51 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from registration.views import *
-
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from registration.views import registration_page,login_view,success,home,home_2,products,profile,contact,about,otp_var,update_profile,forgot_password,verify_otp,AddToCartView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register', registration_page,name='reg'),
+    path('reg', registration_page,name='reg'),
     path('login',login_view,name='login'),
-    path('',welcome,name='welcome'),
-    path('success',success,name='success'),
-    path('home',home,name='home'),
-    path('contact',contact,name='contact'),
+    path('success/<int:id>/',success,name='success'),
+    path('',home,name='home'),
+    path('home2/<id>/',home_2,name='home2'),
+    path('profile/<int:id>/',profile, name='profile'),
+    path('update-profile',update_profile,name='update_profile'),
+    path('contact/<int:id>/',contact,name='contact'),
     path('products',products,name='products'),
-    path('about',about,name='about'),
-    path('verifypage',verify,name='verifypage'),
-    # path('otp_reg',otp_reg,name='otp_regis'),
-    path('reset-password', PasswordResetView.as_view(), name='password_reset'), 
-    path('reset-password/done', PasswordResetDoneView.as_view(), name='password_reset_done'), 
-    path('reset-password/confirm/<uidb64>[0-9A-Za-z]+)-<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'), 
-    path('reset-password/complete/',PasswordResetCompleteView.as_view(),name='password_reset_complete'),
-    path('otpver/<email>',otp_var,name="otp_verfication"),
-    path('authtication_otp',authtication_otp,name="authtication_otp")
-    
+    path('about/<int:id>/',about,name='about'),
+    path('otp-verification/<str:email>/', otp_var, name='otp_verification'),
+    path('forgot_password/', forgot_password, name='forgot_password'),
+    path('verify_otp/<str:email>/', verify_otp, name='verify_otp'),
+    path('add_to_cart/', AddToCartView, name='add_to_cart'),
 
-
-    
 ]
+
+# from django.contrib import admin
+# from django.urls import path
+# from registration.views import registration_page,login_view,success,home,home_2,products,profile,contact,about,otp_var,update_profile
+# from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('reg', registration_page,name='reg'),
+#     path('login',login_view,name='login'),
+#     path('success',success,name='success'),
+#     path('',home,name='home'),
+#     path('home2/<id>/',home_2,name='home2'),
+#     path('profile/<int:id>/',profile, name='profile'),
+#     path('update_profile',update_profile,name='update_profile'),
+#     path('contact',contact,name='contact'),
+#     path('products',products,name='products'),
+#     path('about',about,name='about'),
+#     path('otp-verification/<str:email>/', otp_var, name='otp_verification'),
+    
+    # path('authtication_otp',authtication_otp,name="authtication_otp")
+    
+    # path('verifypage',verify,name='verifypage'),
+    # path('otp_reg',otp_reg,name='otp_regis'),
+    # path('reset-password', PasswordResetView.as_view(), name='password_reset'), 
+    # path('reset-password/done', PasswordResetDoneView.as_view(), name='password_reset_done'), 
+    # path('reset-password/confirm/<uidb64>[0-9A-Za-z]+)-<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'), 
+    # path('reset-password/complete/',PasswordResetCompleteView.as_view(),name='password_reset_complete'),    
+

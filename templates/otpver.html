@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,23 +86,22 @@
         }
     </style>
 </head>
+
 <body>
     <div class="otp-container">
         <h1>Verify Your OTP</h1>
-        <p>Enter the 6-digit code sent to your email or phone.</p>
-        <form id="otp-form" action="{%url 'authtication_otp' %}" method="POST">
+        <p>Enter the 4-digit code sent to your email or phone.</p>
+        <form action="{% url 'otp_verification' email=email %}" method="POST">
 
             {%csrf_token%}
             <div class="otp-input">
-                
-                <input id="otp" maxlength="1" name="otp_veri" type="text"  required>
-                <input id="otp" maxlength="1" name="otp_veri" type="text"  required>
-                <input id="otp" maxlength="1" name="otp_veri" type="text"  required>
-                <input id="otp" maxlength="1" name="otp_veri" type="text"  required>
-                               
-               
-                <input id="email" name="email_veri"  value ={{email}} hidden>
 
+                <input id="otp" maxlength="1" name="o1" text="text" required>
+                <input id="otp" maxlength="1" name="o2" type="text" required>
+                <input id="otp" maxlength="1" name="o3" type="text" required>
+                <input id="otp" maxlength="1" name="o4" type="text" required>
+
+                <input id="email name" email_veri value={{email}} hidden>
             </div>
             <button type="submit" class="submit-btn">Verify</button>
         </form>
