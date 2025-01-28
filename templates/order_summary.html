@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f1eb;
+            color: #333;
+        }
+
+        .order-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-item .details {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .total-amount {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #8d6f47;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="order-container">
+        <h1>Order Summary</h1>
+        {% if data.cart_items %}
+        <div id="order-items-container">
+            {% for item in data.cart_items %}
+            <div class="order-item">
+                <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
+                <div class="details">
+                    <h2>{{ item.product.name }}</h2>
+                    <p>Price: ${{ item.product.price }}</p>
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <p>Total: ${{ item.total }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="total-amount">
+            <p>Final Total: $<span id="total-amount">{{ data.total_amount }}</span></p>
+        </div>
+        {% else %}
+        <p>Your order is empty.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

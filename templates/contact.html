@@ -45,7 +45,7 @@
     .hero {
       position: relative;
       height: 50vh;
-      background: url('https://source.unsplash.com/1600x900/?ice-cream,factory') no-repeat center center;
+      background: url('https://mistralaichatupprodswe.blob.core.windows.net/chat-images/assistant/20/21/60/2021609f-f811-453e-af35-f0895c708c61/c6f78fc1-8840-4c3f-8706-924739f7d702/8a23a6b2-4d32-43aa-92f4-7b2193f9609c') no-repeat center center;
       background-size: cover;
       display: flex;
       justify-content: center;
@@ -76,10 +76,13 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      background: url('https://mistralaichatupprodswe.blob.core.windows.net/chat-images/assistant/20/21/60/2021609f-f811-453e-af35-f0895c708c61/c6f78fc1-8840-4c3f-8706-924739f7d702/8a23a6b2-4d32-43aa-92f4-7b2193f9609c?sv=2025-01-05&st=2025-01-27T12%3A44%3A34Z&se=2025-01-27T13%3A44%3A34Z&sr=b&sp=rade&sig=48yk%2BGyNUS5y8ZRJHcXToJDAp7%2B2qQqU5odAT9Ydzj8%3D') no-repeat center center;
+      background-size: cover;
+      padding: 20px;
     }
 
     .contact-form {
-      background-color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.9);
       padding: 30px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -147,9 +150,10 @@
   <!-- Navigation Bar -->
   <nav>
     <a href="{% url 'home2' data.id %}">Home</a>
-    <a href="{% url 'products'  %}">Products</a>
+    <a href="{% url 'products' %}?user_id={{ user_id }}">Products</a>
     <a href="{% url 'about' data.id %}">About Us</a>
     <a href="#">Contact</a>
+    <a href="{% url 'cart_page' data.id  %}">Cart 🛒</a>
   </nav>
 
   <!-- Hero Section -->

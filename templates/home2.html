@@ -96,12 +96,12 @@
     .hero {
       position: relative;
       height: 100vh;
-      background: url('https://source.unsplash.com/1600x900/?ice-cream,factory') no-repeat center center;
+      background: url('https://mistralaichatupprodswe.blob.core.windows.net/chat-images/assistant/20/21/60/2021609f-f811-453e-af35-f0895c708c61/c6f78fc1-8840-4c3f-8706-924739f7d702/672428aa-d32e-4e90-9047-443228568088?sv=2025-01-05&st=2025-01-27T12%3A41%3A55Z&se=2025-01-27T13%3A41%3A55Z&sr=b&sp=rade&sig=P%2BEVODMRdMEr1KywKEGWGmOkiM83iew%2BBjyTe5gW530%3D') no-repeat center center;
       background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
+      color: rgb(152, 239, 131);
       text-align: center;
       flex-direction: column;
       background-blend-mode: overlay;
@@ -161,7 +161,7 @@
       <a href="{% url 'products' %}?user_id={{ data.id }}">Products</a>
       <a href="{% url 'about' data.id %}">About Us</a>
       <a href="{% url 'contact' data.id %}">Contact</a>
-      <a href="{% url 'cart' data.id  %}">Cart 🛒</a>
+      <a href="{% url 'cart_page' data.id  %}">Cart 🛒</a>
       
       <!-- Dropdown Menu -->
       <div class="dropdown">

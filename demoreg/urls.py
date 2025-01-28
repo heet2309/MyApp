@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from registration.views import registration_page,login_view,success,home,home_2,products,profile,contact,about,otp_var,update_profile,forgot_password,verify_otp,add_to_cart,cart,RemoveFromCartView,ReduceQuantityView
+from registration.views import registration_page,login_view,success,home,home_2,products,profile,contact,about,otp_var,update_profile,forgot_password,verify_otp,add_to_cart,buy_all_items,buy_item,remove_cart_item,cart_page,update_cart_quantity,order_summary,send_email_with_pdf
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,11 +34,23 @@ urlpatterns = [
     path('forgot_password/', forgot_password, name='forgot_password'),
     path('verify_otp/<str:email>/', verify_otp, name='verify_otp'),
     path('add_to_cart/', add_to_cart, name='add_to_cart'),
-    path('cart/<int:user_id>/', cart, name='cart'),
-    path('remove_from_cart_api/', RemoveFromCartView, name='remove_from_cart_api'),
-    path('reduce_quantity_api/', ReduceQuantityView, name='reduce_quantity_api'),
-
+    path('cart/<int:user_id>/', cart_page, name='cart_page'),
+    
+    path('remove_cart_item/', remove_cart_item, name='remove_cart_item'),
+    
+    path('update_cart_quantity/', update_cart_quantity, name='update_cart_quantity'),
+    
+    path('buy_item/', buy_item, name='buy_item'),
+    
+    path('buy_all_items/', buy_all_items, name='buy_all_items'),
+    
+    path('order_summary/<int:user_id>/', order_summary, name='order_summary'),
+    path('send_email_with_pdf/', send_email_with_pdf, name='send_email_with_pdf'),
+   
 ]
+
+    
+
 
 # from django.contrib import admin
 # from django.urls import path

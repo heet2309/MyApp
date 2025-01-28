@@ -2,16 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User  # Importing the default User model
 
 
-
 class RegistrationTable(models.Model):
     name = models.CharField(max_length=100)
-    email = models.EmailField()
+    email = models.EmailField(max_length=200)
     password = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
 
     class Meta:
         db_table = "registration_table"
-
 
 class TemporaryTable(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -35,9 +33,12 @@ class Product(models.Model):
         db_table = "product"
 
 class Cart(models.Model):
-    user = models.ForeignKey(RegistrationTable, on_delete=models.CASCADE)
+    user = models.ForeignKey(RegistrationTable, on_delete=models.CASCADE,null=True,blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE,blank=True, null=True)
     quantity = models.IntegerField(default=1, blank=True, null=True)
+    purchased = models.BooleanField(default=False)
+   
+
 
     def __str__(self):
         return f"{self.product.name} - {self.quantity}" 

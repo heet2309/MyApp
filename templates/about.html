@@ -142,9 +142,10 @@
   <!-- Navigation Bar -->
   <nav>
     <a href="{% url 'home2' data.id %}">Home</a>
-    <a href="{% url 'products'  %}">Products</a>
+    <a href="{% url 'products' %}?user_id={{ user_id }}">Products</a>
     <a href="#">About Us</a>
     <a href="{% url 'contact' data.id %}">Contact</a>
+    <a href="{% url 'cart_page' data.id  %}">Cart 🛒</a>
   </nav>
 
   <!-- Heading Section -->
@@ -157,7 +158,7 @@
   <div class="about-section">
     <!-- About Image -->
     <div class="about-image">
-      <img src="https://source.unsplash.com/600x400/?ice-cream,factory" alt="Our Factory">
+      <img src="https://mistralaichatupprodswe.blob.core.windows.net/chat-images/assistant/20/21/60/2021609f-f811-453e-af35-f0895c708c61/c6f78fc1-8840-4c3f-8706-924739f7d702/d94b182b-9f7c-4f7b-a7cd-e9a5d50ac95c?sv=2025-01-05&st=2025-01-27T12%3A32%3A08Z&se=2025-01-27T13%3A32%3A08Z&sr=b&sp=rade&sig=7Z7rjzx4TNT%2FqO%2FRsVu3%2BWLJ0BO3XdKUZSxOIsXsXPg%3D" alt="Our Factory">
     </div>
     <!-- About Content -->
     <div class="about-content">
