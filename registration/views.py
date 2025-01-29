@@ -14,6 +14,8 @@ from django.views.decorators.csrf import csrf_exempt
 import base64
 import io,os
 from io import BytesIO
+from django.contrib.auth import logout
+
 
 import tempfile
 
@@ -453,6 +455,11 @@ def send_email_with_pdf(request):
             return JsonResponse({'success': False, 'message': str(e)})
     return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
 # @csrf_exempt
 # def send_email_with_pdf(id):
 #     if request.method == 'POST':
@@ -498,8 +505,7 @@ def send_email_with_pdf(request):
 #                 return JsonResponse({'success': False, 'message': 'User registration not found.'})
 #             pdf_data = data.get('pdf_base64')
 #             pdf_name = data.get('pdf_name', 'order_summary.pdf')
-#             pdf_content = base64.b64decode(pdf_data.split(',')[1])
-#             # Send the email logic (example with yagmail)
+#             pdf_content = base64.b64decode(pdf_data.split(',')[1])Send the email logic (example with yagmail)
 #             yag = mail.SMTP('heetlahute@gmail.com', 'myuh ajbw mlzu qlvo')
 #             yag.send(
 #                 to=user_email,

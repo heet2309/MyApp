@@ -436,12 +436,12 @@
             {% if data.cart_items %}
             <div id="cart-items-container">
                 {% for item in data.cart_items %}
-                <div class="cart-item" data-item-id="{{ item.id }}">
+                <div class="cart-item" data-item-id="{{ item.id }}" data-price="{{ item.product.price }}">
                     <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
                     <div class="details">
                         <h2>{{ item.product.name }}</h2>
                         <p>Price: ₹{{ item.product.price }}</p>
-                        <p>Total: ₹{{ item.total }}</p>
+                        <p class="item-total">Total: ₹{{ item.total }}</p>
                     </div>
                     <div class="quantity">
                         <button type="button" class="quantity-btn" data-action="decrease">-</button>
@@ -479,7 +479,6 @@
         <div class="spinner"></div>
         <div class="message">Sending email...</div>
     </div>
-
 
     <div class="overlay" id="overlay"></div>
 
@@ -641,7 +640,7 @@
         function updateTotalAmount() {
             let total = 0;
             $('.cart-item').each(function () {
-                let priceText = $(this).find('.details p:nth-child(2)').text().replace('Price: ₹', '');
+                let priceText = $(this).data('price');
                 let quantityText = $(this).find('.quantity-input').val();
 
                 // Parse the price and quantity values
@@ -655,6 +654,8 @@
                 // Check if the parsed values are valid numbers
                 if (!isNaN(price) && !isNaN(quantity)) {
                     total += price * quantity;
+                    // Update the item total in the UI
+                    $(this).find('.item-total').text('Total: ₹' + (price * quantity).toFixed(2));
                 } else {
                     console.error('Invalid price or quantity:', price, quantity);
                 }
@@ -672,7 +673,6 @@
         function hideLoadingSpinner() {
             document.getElementById('loading-spinner').style.display = 'none';
         }
-
 
         function showSuccessMessage() {
             var messageContainer = document.getElementById('message-container');
@@ -697,7 +697,7 @@
                 doc.save(pdfName);
 
                 // Show the loading animation
-                showLoadingSpinner() 
+                showLoadingSpinner()
 
                 $.ajax({
                     url: "{% url 'send_email_with_pdf' %}",

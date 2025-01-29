@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <title>Ice Cream Factory</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -21,10 +20,6 @@
       font-family: 'Poppins', sans-serif;
       background-color: #f4f4f9;
       color: #333;
-      background-image: url('https://source.unsplash.com/1600x900/?ice-cream,background');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
     }
 
     /* Navigation Bar */
@@ -63,6 +58,14 @@
       font-weight: 600;
       cursor: pointer;
       text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown-btn img {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
     }
 
     .dropdown-btn:hover {
@@ -106,7 +109,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: rgb(152, 239, 131);
+      color: white;
       text-align: center;
       flex-direction: column;
       background-blend-mode: overlay;
@@ -155,118 +158,95 @@
       color: white;
     }
 
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.5);
+    .editable {
+      position: relative;
+      display: inline-block;
     }
 
-    .modal-content {
-      background-color: #f4f4f9;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 400px;
-      border-radius: 10px;
-      text-align: center;
+    .edit-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 5px;
+      cursor: pointer;
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
-    .modal-content h2 {
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: #333;
+    .edit-btn:hover {
+      background-color: #218838;
     }
 
-    .modal-content .btn {
-      margin: 10px;
+    .editing {
+      outline: none;
+      border: 1px solid #28a745;
+      padding: 5px;
+      border-radius: 5px;
     }
   </style>
 </head>
 
 <body>
-  <form method="post">
-    {% csrf_token %}
-    <!-- Navigation Bar -->
-    <nav>
-      <a href="#">Home</a>
-      <a href="{% url 'products' %}?user_id={{ data.id }}">Products</a>
-      <a href="{% url 'about' data.id %}">About Us</a>
-      <a href="{% url 'contact' data.id %}">Contact</a>
-      <a href="{% url 'cart_page' data.id  %}">Cart 🛒</a>
-
-      <!-- Dropdown Menu -->
-      <div class="dropdown">
-        <button class="dropdown-btn"><img src="https://cdn-icons-png.flaticon.com/512/7242/7242917.png" alt="Account Icon" style="width: 24px; height: 24px;"></button>
-        <div class="dropdown-content">
-          <a href="{% url 'forgot_password'  %}">Forget Password</a>
-          <a href="{% url 'profile' data.id %}">Profile</a>
-          <a href="#" id="logout-btn">Logout</a>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero">
-      <h1>Welcome to Ice Cream Factory</h1>
-      <p>Fresh, Delicious & Premium Ice Creams made with love!</p>
-      <div class="description">
-        Indulge in the finest ice creams crafted with the freshest ingredients. Our flavors range from classic vanilla to exotic mango, ensuring there's something for everyone. Experience the joy of ice cream like never before!
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#" class="editable">Home</a>
+    <!-- Dropdown Menu -->
+    <div class="dropdown">
+      <button class="dropdown-btn editable">
+        <img src="https://cdn-icons-png.flaticon.com/512/7242/7242917.png" alt="Account Icon">
+      </button>
+      <div class="dropdown-content">
+        <a href="login" class="editable"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="reg" class="editable"><i class="fas fa-user-plus"></i> Sign up</a>
       </div>
     </div>
+  </nav>
 
-    <!-- Footer Section -->
-    <footer>
-      <p>&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
-    </footer>
-
-    <!-- Modal Structure -->
-    <div id="logoutModal" class="modal">
-      <div class="modal-content">
-        <h2>Confirm Logout</h2>
-        <p>Are you sure you want to logout?</p>
-        <button class="btn" id="confirm-logout">Yes</button>
-        <button class="btn" id="cancel-logout">No</button>
-      </div>
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1 class="editable">Welcome to Ice Cream Factory</h1>
+    <p class="editable">Fresh, Delicious & Premium Ice Creams made with love!</p>
+    <div class="description editable">
+      Indulge in the finest ice creams crafted with the freshest ingredients. Our flavors range from classic vanilla to exotic mango, ensuring there's something for everyone. Experience the joy of ice cream like never before!
     </div>
-  </form>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p class="editable">&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
+  </footer>
 
   <script>
-    $(document).ready(function() {
-      $('#logout-btn').click(function(event) {
-        event.preventDefault();
-        $('#logoutModal').show();
-      });
+    document.addEventListener('DOMContentLoaded', function() {
+      // Select all editable elements
+      const editableElements = document.querySelectorAll('.editable');
 
-      $('#confirm-logout').click(function() {
-        $.ajax({
-          url: '{% url "logout" %}',  // Updated to use the logout view URL
-          method: 'POST',
-          data: {
-            csrfmiddlewaretoken: '{{ csrf_token }}'
-          },
-          success: function(response) {
-            if (response.success) {
-              window.location.href = '{% url "home" %}';  // Redirect to home or login page
-            } else {
-              alert('Logout failed: ' + response.error);
-            }
-          },
-          error: function(xhr, status, error) {
-            alert('An error occurred while logging out.');
+      // Iterate over each editable element
+      editableElements.forEach(function(element) {
+        // Create an edit button
+        const editBtn = document.createElement('button');
+        editBtn.className = 'edit-btn';
+        editBtn.innerHTML = '✏️';
+
+        // Insert the edit button after the editable element
+        element.parentNode.insertBefore(editBtn, element.nextSibling);
+
+        // Add click event listener to the edit button
+        editBtn.addEventListener('click', function() {
+          if (element.contentEditable === 'true') {
+            // Save the changes and make the element non-editable
+            element.contentEditable = 'false';
+            element.classList.remove('editing');
+          } else {
+            // Make the element editable
+            element.contentEditable = 'true';
+            element.classList.add('editing');
+            element.focus();
           }
         });
-      });
-
-      $('#cancel-logout').click(function() {
-        $('#logoutModal').hide();
       });
     });
   </script>

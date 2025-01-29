@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ice Cream Factory</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     /* Global Reset */
     * {
@@ -57,6 +58,14 @@
       font-weight: 600;
       cursor: pointer;
       text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown-btn img {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
     }
 
     .dropdown-btn:hover {
@@ -95,7 +104,7 @@
     .hero {
       position: relative;
       height: 100vh;
-      background: url('https://source.unsplash.com/1600x900/?ice-cream,factory') no-repeat center center;
+      background: url('https://mistralaichatupprodswe.blob.core.windows.net/chat-images/assistant/20/21/60/2021609f-f811-453e-af35-f0895c708c61/c6f78fc1-8840-4c3f-8706-924739f7d702/34ba16c4-ed66-44d7-8158-233b37ecd202?sv=2025-01-05&st=2025-01-29T11%3A15%3A41Z&se=2025-01-29T12%3A15%3A41Z&sr=b&sp=rade&sig=3HR7yg8WFKQI3z5cHPRBDeUHnQoRT457SMMZy6U%2FuNE%3D') no-repeat center center;
       background-size: cover;
       display: flex;
       justify-content: center;
@@ -157,10 +166,12 @@
     <a href="#">Home</a>
     <!-- Dropdown Menu -->
     <div class="dropdown">
-      <button class="dropdown-btn">Account</button>
+      <button class="dropdown-btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/7242/7242917.png" alt="Account Icon">
+      </button>
       <div class="dropdown-content">
-        <a href="login">Login</a>
-        <a href="reg">Sign up</a>
+        <a href="login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="reg"><i class="fas fa-user-plus"></i> Sign up</a>
       </div>
     </div>
   </nav>
