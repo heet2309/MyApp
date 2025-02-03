@@ -46,4 +46,20 @@ class Cart(models.Model):
     class Meta:
         db_table = "cart"       
         
+class EditableContent(models.Model):
+    title = models.CharField(max_length=255,null=True)
+    subtitle = models.CharField(max_length=255,null=True)
+    description = models.TextField( null=True)
+   
     
+    class Meta:
+        db_table = "editable_content"
+
+class Home2edit(models.Model):
+    title = models.CharField(max_length=255,null=True)
+    subtitle = models.CharField(max_length=255,null=True)
+    description = models.TextField( null=True)
+   
+    
+    class Meta:
+        db_table = "home2edit"

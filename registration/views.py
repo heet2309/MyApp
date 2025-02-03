@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import TemporaryTable, RegistrationTable,Product,Cart
+from .models import TemporaryTable, RegistrationTable, Product, Cart, EditableContent, Home2edit
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 import yagmail as mail
@@ -12,13 +12,13 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 import base64
-import io,os
+import io
+import os
 from io import BytesIO
 from django.contrib.auth import logout
 
 
 import tempfile
-
 
 
 def registration_page(request):
@@ -28,8 +28,7 @@ def registration_page(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
         phone = request.POST.get("phone")
-        
-       
+
         otp = rand.randint(1000, 9999)
 
         try:
@@ -43,7 +42,7 @@ def registration_page(request):
             print("Email Sent Successfulyy")
 
             temp_reg = TemporaryTable(
-            name=name, phone=phone, email=email, otp=otp, password=password)
+                name=name, phone=phone, email=email, otp=otp, password=password)
             temp_reg.save()
 
         except Exception as e:
@@ -71,13 +70,13 @@ def login_view(request):
     return render(request, 'login.html')
 
 
-def success(request,id):
-    
+def success(request, id):
+
     user = RegistrationTable.objects.get(id=id)
     data = {
         'id': id
     }
-    return render(request, 'success.html',{'user': data})
+    return render(request, 'success.html', {'user': data})
 
 
 def profile(request, id):
@@ -126,19 +125,22 @@ def update_profile(request):
     return JsonResponse({'success': False, 'message': 'Invalid request.'})
 
 
-
 def home(request):
-    return render(request, 'home.html')
-
+    content = EditableContent.objects.first()
+    with open('con.txt', 'w') as f:
+        f.write(str(content))
+    return render(request, 'home.html', {'content': content})
 
 
 def home_2(request, id):
-
+    content = get_object_or_404(Home2edit, pk=1)
+    with open('new.txt', 'w') as f:
+        f.write(str(content))
     data = {
-        'id': id
+        'id': id,
+        'content': content
     }
-
-    return render(request, "home2.html", {'data': data})
+    return render(request, "home2.html", data)
 
 
 def contact(request, id):
@@ -146,6 +148,8 @@ def contact(request, id):
         'id': id
     }
     return render(request, 'contact.html', {'data': data})
+
+
 @csrf_exempt
 def add_to_cart(request):
     if request.method == "POST":
@@ -153,13 +157,15 @@ def add_to_cart(request):
             data = json.loads(request.body)
             user_id = data.get("user_id")
             product_id = data.get("product_id")
-            quantity =int(data.get("quantity", 1))
-            
-            print(f"User ID: {user_id}, Product ID: {product_id}, Quantity: {quantity}") 
+            quantity = int(data.get("quantity", 1))
+
+            print(f"User ID: {user_id}, Product ID: {
+                  product_id}, Quantity: {quantity}")
 
             user = get_object_or_404(RegistrationTable, id=user_id)
             product = get_object_or_404(Product, id=product_id)
-            cart_item, created = Cart.objects.get_or_create(user=user, product=product)
+            cart_item, created = Cart.objects.get_or_create(
+                user=user, product=product)
 
             if not created:
                 cart_item.quantity += int(quantity)
@@ -167,7 +173,7 @@ def add_to_cart(request):
             else:
                 cart_item.quantity = int(quantity)
                 cart_item.save()
-                
+
             return JsonResponse({"success": True, "message": "Item added to cart."})
         except Exception as e:
             return JsonResponse({"success": False, "message": str(e)})
@@ -175,19 +181,19 @@ def add_to_cart(request):
 
 
 def products(request):
-    
-   
+
     user_id = request.GET.get('user_id')
     print(f"User ID: {user_id}")  # Debugging print statement
     products = Product.objects.all()
     return render(request, "products.html", {"products": products, "user_id": user_id})
 
-    
+
 def about(request, id):
     data = {
         'id': id
     }
     return render(request, 'about.html', {'data': data})
+
 
 def otp_var(request, email):
     if request.method == 'POST':
@@ -209,17 +215,16 @@ def otp_var(request, email):
             )
             reg.save()
 
-           
             temp_reg.delete()
 
-            
-            return redirect('success') 
+            # Redirect to home2 with the user's ID
+            return redirect('home2', id=reg.id)
         except TemporaryTable.DoesNotExist:
-            messages.error(request, "Invalid OTP or expired OTP. Please try again.")
+            messages.error(
+                request, "Invalid OTP or expired OTP. Please try again.")
         except Exception as e:
             messages.error(request, f"An error occurred: {str(e)}")
 
-   
     return render(request, 'otpver.html', {'email': email})
 
 
@@ -236,7 +241,6 @@ def sendmail(request, email):
         print("Fail to send confirmation email")
 
 
-
 otp_storage = {}
 
 
@@ -248,7 +252,6 @@ def forgot_password(request):
             otp = rand.randint(1000, 9999)
             otp_storage[email] = otp
 
-            
             yag = mail.SMTP("heetlahute@gmail.com", "myuh ajbw mlzu qlvo")
             yag.send(
                 to=email,
@@ -263,22 +266,24 @@ def forgot_password(request):
             messages.error(request, "Email does not exist.")
     return render(request, 'forgot_password.html')
 
+
 def verify_otp(request, email):
     if request.method == 'POST':
         otp = request.POST.get('otp')
         new_password = request.POST.get('new_password')
 
-
         if email in otp_storage and otp_storage[email] == int(otp):
             user = RegistrationTable.objects.get(email=email)
             user.password = new_password
             user.save()
-            del otp_storage[email]  
-            messages.success(request, "Password reset successfully. Please log in.")
+            del otp_storage[email]
+            messages.success(
+                request, "Password reset successfully. Please log in.")
             return redirect('login')
         else:
             messages.error(request, "Invalid OTP or expired.")
     return render(request, 'verify_otp.html', {'email': email})
+
 
 def cart_page(request, user_id):
     user = get_object_or_404(RegistrationTable, id=user_id)
@@ -295,6 +300,7 @@ def cart_page(request, user_id):
         'user_id': user_id
     }
     return render(request, "cart.html", {"data": data})
+
 
 @csrf_exempt
 def remove_cart_item(request):
@@ -326,6 +332,8 @@ def update_cart_quantity(request):
             logger.error(f"Error updating cart quantity: {str(e)}")
             return JsonResponse({"success": False, "message": str(e)})
     return JsonResponse({"success": False, "message": "Invalid request."})
+
+
 @csrf_exempt
 def buy_item(request):
     if request.method == 'POST':
@@ -353,6 +361,7 @@ def buy_item(request):
         except Exception as e:
             return JsonResponse({"success": False, "message": str(e)})
     return JsonResponse({"success": False, "message": "Invalid request."})
+
 
 @csrf_exempt
 def buy_all_items(request):
@@ -394,6 +403,7 @@ def buy_all_items(request):
             return JsonResponse({"success": False, "message": str(e)})
     return JsonResponse({"success": False, "message": "Invalid request."})
 
+
 def order_summary(request, user_id):
     user = get_object_or_404(RegistrationTable, id=user_id)
     cart_items = Cart.objects.filter(user=user, purchased=True)
@@ -418,14 +428,14 @@ def send_email_with_pdf(request):
             # Retrieve the user ID from the request data
             data = json.loads(request.body)
             user_id = data.get('user_id')
-            
+
             # Retrieve the user's email from the RegistrationTable
             try:
                 user = RegistrationTable.objects.get(id=user_id)
                 email = user.email
                 with open('email.txt', 'w') as f:
                     f.write(str(email))
-                
+
             except RegistrationTable.DoesNotExist:
                 return JsonResponse({'success': False, 'message': 'User registration not found.'})
 
@@ -437,8 +447,8 @@ def send_email_with_pdf(request):
             with tempfile.NamedTemporaryFile(delete=False, mode='wb') as f:
                 f.write(pdf_content)
                 temp_pdf_path = f.name
-                    
-            os.rename(temp_pdf_path, f"{temp_pdf_path}.pdf")       
+
+            os.rename(temp_pdf_path, f"{temp_pdf_path}.pdf")
 
             yag = mail.SMTP('heetlahute@gmail.com', 'myuh ajbw mlzu qlvo')
             yag.send(
@@ -455,11 +465,57 @@ def send_email_with_pdf(request):
             return JsonResponse({'success': False, 'message': str(e)})
     return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+
 def logout_view(request):
     if request.method == 'POST':
         logout(request)
         return JsonResponse({'success': True})
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+@csrf_exempt
+def home_edit(request):
+    content, created = EditableContent.objects.get_or_create(pk=1)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        content.title = data.get('title', content.title)
+        content.subtitle = data.get('subtitle', content.subtitle)
+        content.description = data.get('description', content.description)
+        content.save()
+        return JsonResponse({"success": True, "message": "Content updated successfully."})
+    return render(request, 'home_edit.html', {'content': content})
+
+
+@csrf_exempt
+def home2edit(request):
+    content, created = Home2edit.objects.get_or_create(pk=1)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        content.title = data.get('title', content.title)
+        content.subtitle = data.get('subtitle', content.subtitle)
+        content.description = data.get('description', content.description)
+        content.save()
+        return JsonResponse({"success": True, "message": "Content updated successfully."})
+    return render(request, 'home2edit.html', {'content': content})
+
+
+def DashBoard(request):
+    return render(request, "DashBoard.html")
+
+
+# def home_edit(request):
+#     if request.method == 'POST':
+#         title = request.POST.get('title')
+#         subtitle = request.POST.get('subtitle')
+#         description = request.POST.get('description')
+#         editable_content, created = EditableContent.objects.get_or_create()
+#         editable_content.title = title
+#         editable_content.subtitle = subtitle
+#         editable_content.description = description
+#         editable_content.save()
+#         return redirect('home')
+#     editable_content = EditableContent.objects.first()
+#     return render(request, 'home_edit.html', {'editable_content': editable_content})
 # @csrf_exempt
 # def send_email_with_pdf(id):
 #     if request.method == 'POST':
@@ -518,7 +574,7 @@ def logout_view(request):
 #             return JsonResponse({'success': False, 'message': str(e)})
 #     return JsonResponse({'success': False, 'message': 'Invalid request method.'}
 # def RemoveFromCartView(request):
-#     if request.method == 'POST':  
+#     if request.method == 'POST':
 #         try:
 #             data = json.loads(request.body)
 #             item_id = data.get('item_id')
@@ -573,7 +629,7 @@ def logout_view(request):
 #              data = json.loads(request.body)
 #              item_id = data.get('item_id')
 #              item = get_object_or_404(Cart, id=item_id)
-#              item.delete() 
+#              item.delete()
 #              return JsonResponse({"success": True, "message": "Item purchased successfully."})
 #          except Exception as e:
 #              return JsonResponse({"success": False, "message": str(e)})
@@ -586,7 +642,7 @@ def logout_view(request):
 #              user_id = data.get('user_id')
 #              user = get_object_or_404(RegistrationTable, id=user_id)
 #              cart_items = Cart.objects.filter(user=user)
-#              cart_items.delete() 
+#              cart_items.delete()
 #              return JsonResponse({"success": True, "message": "All items purchased successfully."})
 #          except Exception as e:
 #              return JsonResponse({"success": False, "message": str(e)})
@@ -686,7 +742,7 @@ def logout_view(request):
 #         except RegistrationTable.DoesNotExist:
 #             messages.error(request, 'User not found.')
 #             return redirect(forgot_password)
-#     return render(request, 'reset_password.html', {'email': email})       
+#     return render(request, 'reset_password.html', {'email': email})
 # This is where OTPs will be temporarily stored (consider using a more secure solution in production)
 # def verify_otp(request, email):
 #     if request.method == 'POST':

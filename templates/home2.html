@@ -197,17 +197,17 @@
     <!-- Navigation Bar -->
     <nav>
       <a href="#">Home</a>
-      <a href="{% url 'products' %}?user_id={{ data.id }}">Products</a>
-      <a href="{% url 'about' data.id %}">About Us</a>
-      <a href="{% url 'contact' data.id %}">Contact</a>
-      <a href="{% url 'cart_page' data.id  %}">Cart 🛒</a>
+      <a href="">Products</a>
+      <a href="">About Us</a>
+      <a href="">Contact</a>
+      <a href="">Cart 🛒</a>
 
       <!-- Dropdown Menu -->
       <div class="dropdown">
         <button class="dropdown-btn"><img src="https://cdn-icons-png.flaticon.com/512/7242/7242917.png" alt="Account Icon" style="width: 24px; height: 24px;"></button>
         <div class="dropdown-content">
-          <a href="{% url 'forgot_password'  %}">Forget Password</a>
-          <a href="{% url 'profile' data.id %}">Profile</a>
+          <a href="">Forget Password</a>
+          <a href="">Profile</a>
           <a href="#" id="logout-btn">Logout</a>
         </div>
       </div>
@@ -215,11 +215,9 @@
 
     <!-- Hero Section -->
     <div class="hero">
-      <h1>Welcome to Ice Cream Factory</h1>
-      <p>Fresh, Delicious & Premium Ice Creams made with love!</p>
-      <div class="description">
-        Indulge in the finest ice creams crafted with the freshest ingredients. Our flavors range from classic vanilla to exotic mango, ensuring there's something for everyone. Experience the joy of ice cream like never before!
-      </div>
+      <h1 id="title">{{ content.title }}</h1>
+      <p id="subtitle">{{ content.subtitle }}</p>
+      <div id="description" class="description">{{ content.description }}</div>
     </div>
 
     <!-- Footer Section -->

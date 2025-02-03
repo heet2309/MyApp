@@ -92,20 +92,18 @@
         <h1>Verify Your OTP</h1>
         <p>Enter the 4-digit code sent to your email or phone.</p>
         <form action="{% url 'otp_verification' email=email %}" method="POST">
-
-            {%csrf_token%}
+            {% csrf_token %}
             <div class="otp-input">
-
-                <input id="otp" maxlength="1" name="o1" text="text" required>
+                <input id="otp" maxlength="1" name="o1" type="text" required>
                 <input id="otp" maxlength="1" name="o2" type="text" required>
                 <input id="otp" maxlength="1" name="o3" type="text" required>
                 <input id="otp" maxlength="1" name="o4" type="text" required>
-
-                <input id="email name" email_veri value={{email}} hidden>
+                <input id="email" name="email" value="{{ email }}" type="hidden">
             </div>
             <button type="submit" class="submit-btn">Verify</button>
         </form>
         <div class="resend">Resend OTP</div>
     </div>
 </body>
+
 </html>

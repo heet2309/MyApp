@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Homepage</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Layout */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            background: url('https://mistralaichatupprodswe.blob.core.windows.net/chat-images/assistant/20/21/60/2021609f-f811-453e-af35-f0895c708c61/c6f78fc1-8840-4c3f-8706-924739f7d702/34ba16c4-ed66-44d7-8158-233b37ecd202?sv=2025-01-05&st=2025-01-29T11%3A15%3A41Z&se=2025-01-29T12%3A15%3A41Z&sr=b&sp=rade&sig=3HR7yg8WFKQI3z5cHPRBDeUHnQoRT457SMMZy6U%2FuNE%3D') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            flex-direction: column;
+            background-blend-mode: overlay;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero .description {
+            font-size: 20px;
+            margin-top: 20px;
+            max-width: 600px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #28a745;
+            color: white;
+        }
+
+        /* Form Styling */
+        #editForm {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        #editForm label {
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        #editForm input[type="text"],
+        #editForm textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        #editForm textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        #editForm button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #editForm button:hover {
+            background-color: #218838;
+        }
+
+        /* Editor Titles */
+        .editor-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Edit Homepage Content</h1>
+        <form id="editForm">
+            <div class="editor-title">Title:</div>
+            <input type="text" id="title" name="title" value="{{ content.title }}"><br>
+            <div class="editor-title">Subtitle:</div>
+            <input type="text" id="subtitle" name="subtitle" value="{{ content.subtitle }}"><br>
+            <div class="editor-title">Description:</div>
+            <textarea id="description" name="description">{{ content.description }}</textarea><br>
+            <button type="button" onclick="saveContent()">Save</button>
+        </form>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Ice Cream Factory. All Rights Reserved.</p>
+    </footer>
+
+</body>
+
+</html>
