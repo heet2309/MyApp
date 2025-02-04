@@ -118,6 +118,7 @@
             <p>Welcome to your Admin Dashboard!</p>
         </div>
     </div>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -133,6 +134,7 @@
                     type: 'GET',
                     success: function (response) {
                         contentArea.innerHTML = response;
+                        bindSaveButtonHome(); // Bind the save button after content is loaded
                     },
                     error: function () {
                         contentArea.innerHTML = '<p>Failed to load content.</p>';
@@ -145,14 +147,42 @@
                     type: 'GET',
                     success: function (response) {
                         contentArea.innerHTML = response;
+                        bindSaveButtonUserHome(); // Bind the save button after content is loaded
                     },
                     error: function () {
                         contentArea.innerHTML = '<p>Failed to load content.</p>';
                     }
                 });
             }
-
         }
+
+       
+        $(document).ready(function () {
+            $('#contentArea').on('submit', '#editForm', function (event) {
+                event.preventDefault();
+                var formData = $(this).serializeArray();
+                var data = {};
+                formData.forEach(function (item) {
+                    data[item.name] = item.value;
+                });
+                $.ajax({
+                    url: "{% url 'home2edit' %}",
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Content updated successfully.");
+                        } else {
+                            alert("Error updating content.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred. Please try again.");
+                    }
+                });
+            });
+        });
 
         function saveContent() {
             const csrftoken = getCookie('csrftoken');
@@ -196,51 +226,7 @@
             return cookieValue;
         }
 
-        function saveContent() {
-            const csrftoken = getCookie('csrftoken');
-            var data = {
-                title: $('#title').val(),
-                subtitle: $('#subtitle').val(),
-                description: $('#description').val(),
-                image_url: $('#image_url').val(),
-                footer_text: $('#footer_text').val()
-            };
-            $.ajax({
-                url: '{% url "home2edit" %}',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                headers: { 'X-CSRFToken': csrftoken },
-                success: function (response) {
-                    if (response.success) {
-                        alert('Content updated successfully.');
-                    } else {
-                        alert('Failed to update content.');
-                    }
-                },
-                error: function () {
-                    alert('An error occurred.');
-                }
-            });
-        }
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
-
         
-
 
     </script>
 </body>

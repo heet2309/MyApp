@@ -134,13 +134,9 @@ def home(request):
 
 def home_2(request, id):
     content = get_object_or_404(Home2edit, pk=1)
-    with open('new.txt', 'w') as f:
-        f.write(str(content))
-    data = {
-        'id': id,
-        'content': content
-    }
-    return render(request, "home2.html", data)
+    user_id = id  # Ensure user_id is passed to the template
+    return render(request, "home2.html", {'content': content, 'user_id': user_id})
+
 
 
 def contact(request, id):
@@ -181,12 +177,10 @@ def add_to_cart(request):
 
 
 def products(request):
-
     user_id = request.GET.get('user_id')
     print(f"User ID: {user_id}")  # Debugging print statement
     products = Product.objects.all()
     return render(request, "products.html", {"products": products, "user_id": user_id})
-
 
 def about(request, id):
     data = {

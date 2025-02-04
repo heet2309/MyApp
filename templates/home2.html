@@ -197,16 +197,16 @@
     <!-- Navigation Bar -->
     <nav>
       <a href="#">Home</a>
-      <a href="">Products</a>
-      <a href="">About Us</a>
-      <a href="">Contact</a>
-      <a href="">Cart 🛒</a>
+      <a href="{% url 'products' %}?user_id={{ user_id }}">Products</a>
+      <a href="{% url 'about' user_id %}">About Us</a>
+      <a href="{% url 'contact' user_id %}">Contact</a>
+      <a href="{% url 'cart_page' user_id %}">Cart 🛒</a>
 
       <!-- Dropdown Menu -->
       <div class="dropdown">
         <button class="dropdown-btn"><img src="https://cdn-icons-png.flaticon.com/512/7242/7242917.png" alt="Account Icon" style="width: 24px; height: 24px;"></button>
         <div class="dropdown-content">
-          <a href="">Forget Password</a>
+          <a href="{% url 'forgot_password' %}">Forget Password</a>
           <a href="">Profile</a>
           <a href="#" id="logout-btn">Logout</a>
         </div>
